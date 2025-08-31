@@ -1,58 +1,92 @@
 import streamlit as st
 from PIL import Image
-import os
 
-# Path to assets folder
-ASSETS_DIR = "assets"
+# Load assets
+statue = Image.open("assets/statue.png")
+logo = Image.open("assets/logo.png")
 
-def load_image(path):
-    return Image.open(os.path.join(ASSETS_DIR, path))
+# Streamlit page setup
+st.set_page_config(
+    page_title="Facebook Connect Yola",
+    page_icon="🎉",
+    layout="centered"
+)
 
-# --- APP CONFIG ---
-st.set_page_config(page_title="Facebook Connect Yola", page_icon="🌍", layout="wide")
+# Custom CSS for vibe
+st.markdown("""
+<style>
+    body {
+        background: linear-gradient(135deg, #0d1b2a, #1b263b, #415a77);
+        color: #f0f0f0;
+        font-family: 'Poppins', sans-serif;
+    }
+    .main {
+        background: transparent;
+    }
+    .stButton button {
+        border-radius: 12px;
+        padding: 0.75rem 2rem;
+        font-weight: 600;
+        font-size: 1rem;
+    }
+    .primary-btn {
+        background-color: #1b263b !important;
+        color: white !important;
+    }
+    .primary-btn:hover {
+        background-color: #415a77 !important;
+        color: #fff !important;
+    }
+    .secondary-btn {
+        background-color: transparent !important;
+        border: 2px solid #4cc9f0 !important;
+        color: #4cc9f0 !important;
+    }
+    .secondary-btn:hover {
+        background-color: #4cc9f0 !important;
+        color: white !important;
+    }
+    .card {
+        background: rgba(255,255,255,0.05);
+        border-radius: 16px;
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+        box-shadow: 0px 4px 12px rgba(0,0,0,0.2);
+    }
+</style>
+""", unsafe_allow_html=True)
 
-# --- HERO SECTION ---
-st.image(load_image("hero/statue.png"), use_column_width=True)
+# Logo + Hero Section
+st.image(logo, width=120)
+st.title("🎉 Facebook Connect Yola")
+st.subheader("Everyone is invited – guys & ladies 🤝")
 
-st.title("Facebook Connect Yola")
-st.subheader("Everyone is invited — both guys and ladies 🎉")
-st.markdown("---")
+# Statue visual
+st.image(statue, use_column_width=True)
 
-# --- TOGGLE SWITCH (Men/Women) ---
-gender = st.radio("Choose your vibe:", ["Men", "Women"], horizontal=True)
-
-if gender == "Men":
-    st.image(load_image("logos/logo_mars.png"), width=120)
-else:
-    st.image(load_image("logos/logo_venus.png"), width=120)
-
-st.markdown("---")
-
-# --- EVENT CARDS ---
-col1, col2, col3, col4, col5 = st.columns(5)
-
+# Event Highlights
+st.markdown("## 🌟 Event Highlights")
+col1, col2 = st.columns(2)
 with col1:
-    st.image(load_image("icons/food.png"), width=80)
-    st.caption("Food")
-
+    st.markdown("<div class='card'>🎶 DJ Atom bringing the vibes</div>", unsafe_allow_html=True)
+    st.markdown("<div class='card'>🍔 Food & Drinks</div>", unsafe_allow_html=True)
 with col2:
-    st.image(load_image("icons/drinks.png"), width=80)
-    st.caption("Drinks")
+    st.markdown("<div class='card'>🎮 Games & Fun</div>", unsafe_allow_html=True)
+    st.markdown("<div class='card'>🎭 Culture & Networking</div>", unsafe_allow_html=True)
 
-with col3:
-    st.image(load_image("icons/music.png"), width=80)
-    st.caption("Music")
+# Mars/Venus Toggle
+gender = st.radio("Who are you booking for?", ["♂️ Men", "♀️ Ladies"])
 
-with col4:
-    st.image(load_image("icons/games.png"), width=80)
-    st.caption("Games")
+# Booking Buttons
+st.markdown("### 📌 Secure Your Spot")
+c1, c2 = st.columns(2)
+with c1:
+    if st.button("🎟️ Book Your Spot", key="book", help="Reserve your seat at the event"):
+        st.success("✅ Spot booked! See you at the event 🎉")
+with c2:
+    if st.button("ℹ️ Learn More", key="learn", help="More details coming soon"):
+        st.info("📅 Event details: Coming Soon!")
 
-with col5:
-    st.image(load_image("icons/dj.png"), width=80)
-    st.caption("DJ Atom")
-
+# Footer
 st.markdown("---")
-
-# --- COMING SOON FOOTER ---
-st.info("📅 Event date & time: Coming Soon!")
-st.success("✨ Join us and celebrate culture, music, and friendship in Yola.")
+st.caption("🌍 Facebook Connect Yola – Celebrating Culture & Community")
